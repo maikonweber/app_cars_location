@@ -1,12 +1,16 @@
 Características
 Trata-se de um sistema para gerenciar a reservas de veículos, a API deve disponibilizar as seguintes rotas:
-Login
+
+[x]Login
 
 Rota para cadastramento de usuário
 Rota para edição e remoção de usuário
-Rota para cadastramentos de veículos
-Rota para edição e remoção de veículos
+
+[x] Rota para cadastramentos de veículos
+[X] Rota para edição e remoção de veículos
+
 Rota para listagem de veículos cadastrados
+
 Rota para reserva de veículo 
 Rota para liberação de veículo reservado
 Rota para a listagem de veículos associados a um usuário
