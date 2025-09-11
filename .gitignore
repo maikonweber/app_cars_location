@@ -1,0 +1,9 @@
+// Ignorar todos node modules em todas as pastas e subpastas
+node_modules/
+// Ignorar archivos de log
+*.log
+# Ignorar archivos de entorno
+.env
+# Ignorar archivos de build
+dist/
+build/
