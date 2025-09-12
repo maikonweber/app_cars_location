@@ -5,13 +5,23 @@
       <h1>GUARDIANS</h1>
     </div>
 
-    <form>
+    <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <input type="text" placeholder="Usuário" />
+        <input 
+          type="text" 
+          placeholder="Usuário" 
+          [(ngModel)]="username" 
+          name="username" 
+          required />
       </div>
 
       <div class="form-group">
-        <input type="password" placeholder="Senha" />
+        <input 
+          type="password" 
+          placeholder="Senha" 
+          [(ngModel)]="password" 
+          name="password" 
+          required />
       </div>
 
       <button type="submit" class="btn-login">ENTRAR</button>
@@ -23,3 +33,4 @@
     </form>
   </div>
 </main>
+

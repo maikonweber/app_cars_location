@@ -1,0 +1,70 @@
+/* -------------------------------
+   RESET CSS
+--------------------------------*/
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* -------------------------------
+   CORES GLOBAIS
+--------------------------------*/
+:root {
+  --color-primary: #1e90ff;    /* Azul principal */
+  --color-secondary: #ff9800;  /* Laranja */
+  --color-success: #4caf50;    /* Verde */
+  --color-danger: #f44336;     /* Vermelho */
+  --color-warning: #ffc107;    /* Amarelo */
+  --color-info: #2196f3;       /* Azul claro */
+
+  --color-light: #f5f5f5;      /* Fundo claro */
+  --color-dark: #212121;       /* Texto escuro */
+  --color-muted: #9e9e9e;      /* Texto apagado */
+  --color-background: #ffffff; /* Fundo padrão */
+}
+
+/* -------------------------------
+   ESTILOS BASE
+--------------------------------*/
+body {
+  background-color: var(--color-background);
+  color: var(--color-dark);
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+input, textarea, select {
+  border: 1px solid var(--color-muted);
+  padding: 0.5rem;
+  border-radius: 6px;
+  width: 100%;
+}

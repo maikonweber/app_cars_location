@@ -3,6 +3,7 @@ Trata-se de um sistema para gerenciar a reservas de veículos, a API deve dispon
 
 [x]Login
 
+
 Rota para cadastramento de usuário
 Rota para edição e remoção de usuário
 
@@ -17,10 +18,26 @@ Rota para a listagem de veículos associados a um usuário
 
 É um sistema de reserva e não de locação, portanto, não deve envolver cálculos de pagamento.
  
+
+QA :
+    [x] LOGIN
+            Login Susseso e Erro
+            JWT Autenticado
+    [x] USERS
+       [] Mudança não funciona
+    [x] Criar usuario funcio e pega erro de duplicadade
+    [x] Valide tras dados sensiveis
+    [x] Deletar usuario tropa permissões e gera erro
+    
+    Carros
+        [] Reservas falta paramentro id para reservar
+        [] Não deve ser possível reservar um veículo já reservado.
+        [] Não deve ser possível um usuário reservar mais de um veículo.
+        [x] Filtro funciona
+        [x] Delete e Get all Funciona
+
 Regras
-As rotas com exceção da rota de login devem ser protegidas com o uso de token.
-Não deve ser possível reservar um veículo já reservado.
-Não deve ser possível um usuário reservar mais de um veículo.
+[x] As rotas com exceção da rota de login devem ser protegidas com o uso de token.
  
 Entrega
 A entrega do projeto deve ser feita via GIT, e o repositório compartilhado para os seguintes usuários: diegoa83 e dcastrohappmobi, após o compartilhamento você deve enviar um e-mail confirmando a entrega para: diego@happmobi.com.br e daniel.castro@happmobi.com.br.
