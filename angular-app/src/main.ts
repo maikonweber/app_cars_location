@@ -1,6 +1,21 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { App } from './app/app';
+import { provideRouter, Routes } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { LoginComponent } from '../src/app/pages/login/login.component'; // precisa importar
+import { HomeComponent } from '../src/app/pages/home/home.component';      // precisa importar
+import { FilterComponent } from '../src/app/pages/filter/filter.component'; // precisa importar
 
-bootstrapApplication(App, appConfig)
-  .catch((err) => console.error(err));
+export const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'filter', component: FilterComponent },
+  { path: '**', redirectTo: 'login' } // rota fallback
+];
+
+bootstrapApplication(LoginComponent, {
+  providers: [
+    provideRouter(routes), // ✅ agora usa a constante
+    provideHttpClient()
+  ]
+});

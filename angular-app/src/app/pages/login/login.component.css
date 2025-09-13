@@ -1,20 +1,32 @@
 /* login.component.css */
+/* Reset mínimo para ocupar tela inteira */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
 .login-container {
-  height: 100vh;
+  min-height: 100vh;              /* cobre a altura total da tela */
+  width: 100%;                    /* largura total */
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0d1b2a; /* fundo azul escuro */
+  background: #0d1b2a;            /* fundo azul escuro */
+  background-size: cover;         /* garante que estenda */
+  background-position: center;
+  background-repeat: no-repeat;
   font-family: "Inter", sans-serif;
 }
 
 .login-card {
-  background: transparent;
-  padding: 2rem;
-  border-radius: 16px;
+  position: relative;
   width: 360px;
-  text-align: center;
-  color: #fff;
+  max-width: 95%; /* 👈 para telas menores */
+  overflow: hidden; /* evita que o logo vaze */
 }
 
 .logo img {
@@ -80,3 +92,80 @@ input {
   font-weight: bold;
   text-decoration: underline;
 }
+
+/* container para posicionamento relativo */
+.login-card {
+  position: relative; /* 👈 importante para o filho absoluto */
+  background: transparent;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 360px;
+  text-align: center;
+  color: #fff;
+  overflow: hidden; /* garante que nada vaze fora */
+}
+
+/* logo de fundo */
+.logo-bg {
+  position: absolute;
+  top: -40px;       /* sobe um pouco */
+  right: -60px;     /* empurra para direita */
+  z-index: 0;       /* fica atrás */
+  opacity: 0.05;    /* bem fraquinho */
+}
+
+.logo-bg img {
+  width: 300px;     /* bem maior que o logo normal */
+  height: auto;
+}
+
+/* logo principal fica acima */
+.logo {
+  position: relative;
+  z-index: 1;
+}
+
+/* telas menores que 768px */
+@media (max-width: 768px) {
+  .login-card {
+    width: 90%; /* ocupa quase toda a largura */
+    padding: 1.5rem;
+  }
+
+  .logo-bg img {
+    width: 200px;  /* reduz tamanho do logo fundo */
+    top: -30px;
+    right: -40px;
+  }
+
+  .logo img {
+    width: 60px; /* reduz o logo principal */
+  }
+
+  .logo h1 {
+    font-size: 1.2rem;
+  }
+}
+
+/* telas menores que 480px */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1rem;
+  }
+
+  .logo-bg img {
+    width: 150px;
+    top: -20px;
+    right: -30px;
+  }
+
+  .logo img {
+    width: 50px;
+  }
+
+  .btn-login {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+}
+

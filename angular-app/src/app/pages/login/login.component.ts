@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-home',
-  imports: [],
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, FormsModule, HttpClientModule], // 👈 aqui
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   username: string = '';
@@ -17,18 +20,13 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-
- 
   onSubmit() {
     this.http.post<any>('http://localhost:3000/auth/login', {
       username: this.username,
       password: this.password
     }).subscribe({
       next: (response) => {
-        // Salva o token no localStorage
         localStorage.setItem('token', response.access_token);
-
-        // Redireciona para home
         this.router.navigate(['/']);
       },
       error: (error) => {
@@ -37,5 +35,4 @@ export class LoginComponent {
       }
     });
   }
-
 }
