@@ -30,8 +30,12 @@ export class LoginService {
   login(username: string, password: string): Observable<LoginResponse> {
     const loginData: LoginRequest = { username, password };
     
+    console.log('🔗 Fazendo requisição para:', this.apiUrl);
+    
     return this.http.post<LoginResponse>(this.apiUrl, loginData).pipe(
       tap((response) => {
+        console.log('📥 Resposta recebida:', response);
+        
         // Salva o token no cookie
         this.setToken(response.access_token);
         
@@ -44,9 +48,11 @@ export class LoginService {
         if (response.user) {
           this.setUserData(response.user);
         }
+        
+        console.log('🍪 Token salvo em cookie');
       }),
       catchError((error) => {
-        console.error('Erro no login:', error);
+        console.error('💥 Erro no LoginService:', error);
         return throwError(() => error);
       })
     );

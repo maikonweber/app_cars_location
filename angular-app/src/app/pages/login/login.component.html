@@ -10,7 +10,7 @@
       <h1>GUARDIANS</h1>
     </div>
 
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit($event)">
       <!-- Mensagem de erro -->
       <div *ngIf="errorMessage" class="error-message" (click)="clearError()">
         {{ errorMessage }}
