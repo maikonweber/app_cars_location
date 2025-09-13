@@ -11,12 +11,19 @@
     </div>
 
     <form (ngSubmit)="onSubmit()">
+      <!-- Mensagem de erro -->
+      <div *ngIf="errorMessage" class="error-message" (click)="clearError()">
+        {{ errorMessage }}
+      </div>
+
       <div class="form-group">
         <input 
           type="text" 
           placeholder="Usuário" 
           [(ngModel)]="username" 
           name="username" 
+          [disabled]="isLoading"
+          (input)="clearError()"
           required />
       </div>
 
@@ -26,10 +33,18 @@
           placeholder="Senha" 
           [(ngModel)]="password" 
           name="password" 
+          [disabled]="isLoading"
+          (input)="clearError()"
           required />
       </div>
 
-      <button type="submit" class="btn-login">ENTRAR</button>
+      <button 
+        type="submit" 
+        class="btn-login"
+        [disabled]="isLoading">
+        <span *ngIf="!isLoading">ENTRAR</span>
+        <span *ngIf="isLoading">ENTRANDO...</span>
+      </button>
 
       <a href="#" class="forgot">Esqueci minha senha</a>
       <p class="register">
