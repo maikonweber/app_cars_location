@@ -13,9 +13,9 @@ export const routes: Routes = [
   { path: '**', redirectTo: 'login' } // rota fallback
 ];
 
-bootstrapApplication(LoginComponent, {
+bootstrapApplication(HomeComponent, {
   providers: [
-    provideRouter(routes), // ✅ agora usa a constante
+    provideRouter(routes), 
     provideHttpClient()
   ]
 });

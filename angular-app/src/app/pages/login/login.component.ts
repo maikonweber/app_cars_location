@@ -42,6 +42,8 @@ export class LoginComponent {
       error: (error) => {
         this.isLoading = false;
         
+        console.error('Erro de login:', error);
+        
         // Trata diferentes tipos de erro
         if (error.status === 401) {
           this.errorMessage = 'Credenciais inválidas. Verifique seu usuário e senha.';
@@ -50,8 +52,6 @@ export class LoginComponent {
         } else {
           this.errorMessage = 'Erro no login. Tente novamente.';
         }
-        
-        console.error('Erro de login:', error);
       }
     });
   }
