@@ -81,7 +81,6 @@ export class FilterService {
     );
   }
 
-  // Aplicar filtros
   applyFilters(filters: {
     carFilters?: {
       marca?: string;

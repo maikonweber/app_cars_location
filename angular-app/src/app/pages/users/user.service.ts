@@ -34,7 +34,7 @@ export interface UserResponse {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/users';
+  private apiUrl = 'http://localhost:3000/users';
 
   constructor(
     private http: HttpClient,
@@ -49,7 +49,6 @@ export class UserService {
     };
   }
 
-  // Buscar todos os usuários
   getAllUsers(): Observable<UserResponse> {
     console.log('👥 Buscando todos os usuários...');
     return this.http.get<UserResponse>(this.apiUrl, {
@@ -176,3 +175,4 @@ export class UserService {
     );
   }
 }
+

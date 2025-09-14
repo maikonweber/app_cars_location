@@ -4,7 +4,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { CookieService } from 'ngx-cookie-service';
 
-import { routes } from './app.routes';
+import { routes } from '../main';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [

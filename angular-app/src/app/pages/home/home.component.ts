@@ -26,11 +26,14 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Usau auth para checar a validação
+    this.loadFeaturedCars();
+    this.loadActiveUsers();
     this.loadDashboardData();
   }
 
   loadDashboardData() {
-    console.log('🏠 Carregando dados do dashboard...');
+    console.log('Carregando dados do dashboard...');
     this.isLoading = true;
     this.errorMessage = '';
 

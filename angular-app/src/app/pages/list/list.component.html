@@ -1,6 +1,124 @@
 <h2>Listagem de Itens</h2>
-<ul>
-  <li *ngFor="let item of itens">
-    <strong>{{ item }}</strong>
-  </li>
-</ul>
+<div *ngIf="isLoading" class="loading">
+  <p>Carregando itens...</p>
+</div>
+
+<div *ngIf="errorMessage" class="error">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
+  <!-- Controles de busca e filtros -->
+  <div class="controls">
+    <div class="search-section">
+      <input 
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        placeholder="Buscar itens..."
+        (keyup.enter)="searchItems()"
+      >
+      <button (click)="searchItems()">🔍 Buscar</button>
+      <button (click)="clearSearch()">🧹 Limpar</button>
+    </div>
+
+    <div class="filter-section">
+      <select [(ngModel)]="filterType">
+        <option value="all">Todos</option>
+        <option value="car">Carros</option>
+        <option value="user">Usuários</option>
+      </select>
+      
+      <select [(ngModel)]="filterStatus">
+        <option value="">Todos os status</option>
+        <option value="Disponível">Disponível</option>
+        <option value="Indisponível">Indisponível</option>
+        <option value="Ativo">Ativo</option>
+        <option value="Inativo">Inativo</option>
+      </select>
+      
+      <button (click)="applyFilters()">🔍 Filtrar</button>
+      <button (click)="clearFilters()">🧹 Limpar Filtros</button>
+    </div>
+
+    <div class="actions">
+      <button (click)="onRefresh()">🔄 Atualizar</button>
+      <button (click)="onAddNew()">➕ Adicionar</button>
+      <button (click)="onExport()">📤 Exportar</button>
+      <button (click)="onPrint()">🖨️ Imprimir</button>
+    </div>
+  </div>
+
+  <!-- Lista de itens -->
+  <div class="items-list" *ngIf="items.length > 0">
+    <div class="item-card" *ngFor="let item of items">
+      <div class="item-header">
+        <h3>{{ item.title }}</h3>
+        <span class="item-type" [class]="'type-' + item.type">
+          {{ item.type === 'car' ? '🚗' : '👤' }}
+        </span>
+      </div>
+      
+      <div class="item-content">
+        <p class="subtitle">{{ item.subtitle }}</p>
+        <p *ngIf="item.description" class="description">{{ item.description }}</p>
+        <span class="status" [class]="'status-' + item.status.toLowerCase()">
+          {{ item.status }}
+        </span>
+      </div>
+      
+      <div class="item-actions">
+        <button (click)="onViewDetails(item)" class="btn-view">👁️ Ver</button>
+        <button (click)="onEditItem(item)" class="btn-edit">✏️ Editar</button>
+        <button (click)="onToggleStatus(item)" class="btn-toggle">
+          {{ item.status === 'Disponível' || item.status === 'Ativo' ? '⏸️ Pausar' : '▶️ Ativar' }}
+        </button>
+        <button (click)="onDeleteItem(item)" class="btn-delete">🗑️ Deletar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensagem quando não há itens -->
+  <div *ngIf="items.length === 0" class="no-items">
+    <p>Nenhum item encontrado.</p>
+  </div>
+
+  <!-- Paginação -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button 
+      (click)="changePage(currentPage - 1)" 
+      [disabled]="currentPage === 1"
+    >
+      ← Anterior
+    </button>
+    
+    <span class="page-info">
+      Página {{ currentPage }} de {{ totalPages }} 
+      ({{ totalItems }} itens)
+    </span>
+    
+    <button 
+      (click)="changePage(currentPage + 1)" 
+      [disabled]="currentPage === totalPages"
+    >
+      Próxima →
+    </button>
+  </div>
+
+  <!-- Controles de itens por página -->
+  <div class="items-per-page">
+    <label>Itens por página:</label>
+    <select [(ngModel)]="itemsPerPage" (change)="changeItemsPerPage(itemsPerPage)">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+    </select>
+  </div>
+</div>
+
+<!-- Navegação -->
+<div class="navigation">
+  <button (click)="goToHome()">🏠 Home</button>
+  <button (click)="goToFilter()">🔍 Filtros</button>
+  <button (click)="goToLogin()">🚪 Login</button>
+</div>

@@ -5,10 +5,7 @@ import { Observable, tap, catchError, throwError } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
 export interface LoginResponse {
-  access_token: string;
-  refresh_token?: string;
-  user?: any;
-  expires_in?: number;
+  token: string;
 }
 
 export interface LoginRequest {
@@ -24,31 +21,22 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService
+    
   ) { }
 
   login(username: string, password: string): Observable<LoginResponse> {
     const loginData: LoginRequest = { username, password };
     
-    console.log('🔗 Fazendo requisição para:', this.apiUrl);
+    console.log('Fazendo requisição para:', this.apiUrl);
     
     return this.http.post<LoginResponse>(this.apiUrl, loginData).pipe(
       tap((response) => {
         console.log('📥 Resposta recebida:', response);
         
         // Salva o token no cookie
-        this.setToken(response.access_token);
+        this.setToken(response.token);
         
-        // Salva refresh token se existir
-        if (response.refresh_token) {
-          this.setRefreshToken(response.refresh_token);
-        }
-        
-        // Salva dados do usuário se existirem
-        if (response.user) {
-          this.setUserData(response.user);
-        }
-        
+    
         console.log('🍪 Token salvo em cookie');
       }),
       catchError((error) => {
@@ -59,57 +47,29 @@ export class LoginService {
   }
 
   private setToken(token: string): void {
-    // Cookie expira em 7 dias (ou ajuste conforme necessário)
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 7);
-    
-    this.cookieService.set('auth_token', token, {
-      expires,
-      secure: false, // true em produção com HTTPS
-      sameSite: 'Strict'
-    });
+  // Armazena o token no localStorage
+    localStorage.setItem('auth_token', token);
   }
 
-  private setRefreshToken(refreshToken: string): void {
-    // Refresh token expira em 30 dias
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 30);
-    
-    this.cookieService.set('refresh_token', refreshToken, {
-      expires,
-      secure: false, // true em produção com HTTPS
-      sameSite: 'Strict'
-    });
+
+ getToken() {
+  if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem('token');
+  }
+  return null;
   }
 
-  private setUserData(user: any): void {
-    this.cookieService.set('user_data', JSON.stringify(user), {
-      expires: 7, // 7 dias
-      secure: false,
-      sameSite: 'Strict'
-    });
-  }
-
-  getToken(): string | null {
-    return this.cookieService.get('auth_token') || null;
-  }
-
-  getRefreshToken(): string | null {
-    return this.cookieService.get('refresh_token') || null;
-  }
-
-  getUserData(): any {
-    const userData = this.cookieService.get('user_data');
-    return userData ? JSON.parse(userData) : null;
+  
+  logout(): void {
+    // Remove o token do localStorage
+    localStorage.removeItem('auth_token');
+    console.log('🍪 Token removido do localStorage');
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    return !!token; // Retorna true se o token existir
   }
-
-  logout(): void {
-    this.cookieService.delete('auth_token');
-    this.cookieService.delete('refresh_token');
-    this.cookieService.delete('user_data');
-  }
+  
+  
 }

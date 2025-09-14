@@ -22,12 +22,12 @@ export class FilterComponent implements OnInit {
   carFilters = {
     marca: '',
     modelo: '',
-    anoMin: null as number | null,
-    anoMax: null as number | null,
-    precoMin: null as number | null,
-    precoMax: null as number | null,
+    anoMin: undefined as number | undefined,
+    anoMax: undefined as number | undefined,
+    precoMin: undefined as number | undefined,
+    precoMax: undefined as number | undefined,
     cor: '',
-    disponivel: null as boolean | null
+    disponivel: undefined as boolean | undefined
   };
 
   // Filtros de usuários
@@ -35,7 +35,7 @@ export class FilterComponent implements OnInit {
     nome: '',
     email: '',
     role: '',
-    ativo: null as boolean | null,
+    ativo: undefined as boolean | undefined,
     cidade: '',
     estado: ''
   };
@@ -150,19 +150,19 @@ export class FilterComponent implements OnInit {
     this.carFilters = {
       marca: '',
       modelo: '',
-      anoMin: null,
-      anoMax: null,
-      precoMin: null,
-      precoMax: null,
+      anoMin: undefined,
+      anoMax: undefined,
+      precoMin: undefined,
+      precoMax: undefined,
       cor: '',
-      disponivel: null
+      disponivel: undefined
     };
 
     this.userFilters = {
       nome: '',
       email: '',
       role: '',
-      ativo: null,
+      ativo: undefined,
       cidade: '',
       estado: ''
     };

@@ -26,7 +26,7 @@ export interface CarResponse {
   providedIn: 'root'
 })
 export class CarService {
-  private apiUrl = 'http://localhost:3000/api/cars';
+  private apiUrl = 'http://localhost:3000/cars';
 
   constructor(
     private http: HttpClient,
@@ -57,7 +57,6 @@ export class CarService {
     );
   }
 
-  // Buscar carro por ID
   getCarById(id: number): Observable<CarResponse> {
     console.log(`🚗 Buscando carro ID: ${id}`);
     return this.http.get<CarResponse>(`${this.apiUrl}/${id}`, {

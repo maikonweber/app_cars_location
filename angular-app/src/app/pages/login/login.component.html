@@ -1,8 +1,8 @@
 <main class="login-container">
 
-   <div class="logo-bg">
-      <img src="assets/logo.png" alt="Logo Background" />
-    </div>
+  <div class="logo-bg">
+    <img src="assets/logo.png" alt="Logo Background" />
+  </div>
 
   <div class="login-card">
     <div class="logo">
@@ -10,47 +10,52 @@
       <h1>GUARDIANS</h1>
     </div>
 
-    <form (ngSubmit)="onSubmit($event)">
-      <!-- Mensagem de erro -->
-      <div *ngIf="errorMessage" class="error-message" (click)="clearError()">
-        {{ errorMessage }}
-      </div>
+    <!-- Mensagem de erro -->
+    <div *ngIf="errorMessage" class="error-message" (click)="clearError()">
+      {{ errorMessage }}
+    </div>
 
-      <div class="form-group">
-        <input 
-          type="text" 
-          placeholder="Usuário" 
-          [(ngModel)]="username" 
-          name="username" 
-          [disabled]="isLoading"
-          (input)="clearError()"
-          required />
-      </div>
+    <div class="form-group">
+      <label for="username">Usuário</label>
+      <input 
+        id="username"
+        type="text" 
+        placeholder="Digite seu usuário" 
+        [(ngModel)]="username" 
+        name="username" 
+        [disabled]="isLoading"
+        (input)="clearError()"
+        #usernameInput="ngModel"
+        required />
+    </div>
 
-      <div class="form-group">
-        <input 
-          type="password" 
-          placeholder="Senha" 
-          [(ngModel)]="password" 
-          name="password" 
-          [disabled]="isLoading"
-          (input)="clearError()"
-          required />
-      </div>
+    <div class="form-group">
+      <label for="password">Senha</label>
+      <input 
+        id="password"
+        type="password" 
+        placeholder="Digite sua senha" 
+        [(ngModel)]="password" 
+        name="password" 
+        [disabled]="isLoading"
+        (input)="clearError()"
+        (keyup.enter)="onLogin()"
+        #passwordInput="ngModel"
+        required />
+    </div>
 
-      <button 
-        type="submit" 
-        class="btn-login"
-        [disabled]="isLoading">
-        <span *ngIf="!isLoading">ENTRAR</span>
-        <span *ngIf="isLoading">ENTRANDO...</span>
-      </button>
+    <button 
+      class="btn-login" 
+      (click)="onLogin()">
+      <ng-container *ngIf="!isLoading">ENTRAR</ng-container>
+      <ng-container *ngIf="isLoading">
+        <span class="spinner"></span> Entrando...
+      </ng-container>
+    </button>
 
-      <a href="#" class="forgot">Esqueci minha senha</a>
-      <p class="register">
-        Ainda não tem cadastro? <a href="#">Criar conta</a>
-      </p>
-    </form>
+    <a href="#" class="forgot">Esqueci minha senha</a>
+    <p class="register">
+      Ainda não tem cadastro? <a href="#">Criar conta</a>
+    </p>
   </div>
 </main>
-

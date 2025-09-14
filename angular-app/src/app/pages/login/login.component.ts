@@ -23,49 +23,42 @@ export class LoginComponent {
   ) {
     console.log('🔧 LoginComponent inicializado');
   }
+  
 
-  onSubmit(event: Event) {
-    console.log('🚀 onSubmit() chamado');
+  onLogin() {
+  console.log('🚀 onSubmit() chamado');
     
-    // Previne o comportamento padrão do formulário (recarregar página)
-    event.preventDefault();
-    event.stopPropagation();
-    
-    if (!this.username || !this.password) {
-      this.errorMessage = 'Por favor, preencha todos os campos.';
-      console.log('❌ Campos vazios');
-      return;
-    }
-
-    this.isLoading = true;
-    this.errorMessage = '';
-    
-    console.log('📤 Enviando requisição para API...');
-
-    this.loginService.login(this.username, this.password).subscribe({
-      next: (response) => {
-        this.isLoading = false;
-        console.log('✅ Login realizado com sucesso!', response);
-        
-        // Redireciona para a página principal
-        this.router.navigate(['/home']);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        
-        console.error('❌ Erro na requisição:', error);
-        
-        // Trata diferentes tipos de erro
-        if (error.status === 401) {
-          this.errorMessage = 'Credenciais inválidas. Verifique seu usuário e senha.';
-        } else if (error.status === 0) {
-          this.errorMessage = 'Erro de conexão. Verifique se a API está rodando.';
-        } else {
-          this.errorMessage = `Erro no login (${error.status}). Tente novamente.`;
-        }
-      }
-    });
+  if (!this.username || !this.password) {
+    this.errorMessage = 'Por favor, preencha todos os campos.';
+    console.log('❌ Campos vazios');
+    return;
   }
+
+  this.isLoading = true;
+  this.errorMessage = '';
+
+  console.log('📤 Enviando requisição para API...');
+
+  this.loginService.login(this.username, this.password).subscribe({
+    next: (response) => {
+      this.isLoading = false;
+      console.log('✅ Login realizado com sucesso!', response);
+      this.router.navigate(['/home']);
+    },
+    error: (error) => {
+      this.isLoading = false;
+      console.error('❌ Erro na requisição:', error);
+
+      if (error.status === 401) {
+        this.errorMessage = 'Credenciais inválidas. Verifique seu usuário e senha.';
+      } else if (error.status === 0) {
+        this.errorMessage = 'Erro de conexão. Verifique se a API está rodando.';
+      } else {
+        this.errorMessage = `Erro no login (${error.status}). Tente novamente.`;
+      }
+    }
+  });
+}
 
   clearError() {
     this.errorMessage = '';
