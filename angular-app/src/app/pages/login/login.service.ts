@@ -54,7 +54,7 @@ export class LoginService {
 
  getToken() {
   if (typeof localStorage !== 'undefined') {
-      return localStorage.getItem('token');
+      return localStorage.getItem('auth_token');
   }
   return null;
   }
