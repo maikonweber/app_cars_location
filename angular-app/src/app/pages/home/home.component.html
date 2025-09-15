@@ -15,7 +15,7 @@
   <h3>Últimas reservas</h3>
   <div class="cards">
     <div class="card" *ngFor="let car of cars">
-      <img [src]="car.imagem" [alt]="car.modelo" />
+      <img [src]="car.url" [alt]="car.modelo" />
       <div class="card-content">
         <h4>{{ car.nome }} - {{ car.ano }}</h4>
         <p>{{ car.tipo_modelo }}</p>
