@@ -12,20 +12,20 @@
   </header>
     
  <section class="reservas">
-  <h3>Últimas reservas</h3>
+  
+  <h3>Veiculos </h3>
+  <div *ngIf="isLoading">Carregando...</div>
+  <div *ngIf="errorMessage">{{ errorMessage }}</div>
+  
   <div class="cards">
-    <div class="card" *ngFor="let car of cars">
-      <img [src]="car.url" [alt]="car.modelo" />
-      <div class="card-content">
-        <h4>{{ car.nome }} - {{ car.ano }}</h4>
-        <p>{{ car.tipo_modelo }}</p>
-        <p>Motor {{ car.potencia_do_motor }}</p>
-        <p>{{ car.numero_de_lugares }} Lugares</p>
-       
-        <button class="btn-alugar">Alugar</button>
-      </div>
-    </div>
+  <div class="card" *ngFor="let car of cars">
+    <img [src]="car.url" [alt]="car.nome" />
+    <h4>{{ car.nome }} - {{ car.ano }}</h4>
+    <p>{{ car.tipo_modelo }}</p>
+    <p>Motor {{ car.potencia_do_motor }} cv</p>
+    <p>{{ car.numero_de_lugares }} Lugares</p>
   </div>
+</div>
 </section>
 
   <div class="qr-section">

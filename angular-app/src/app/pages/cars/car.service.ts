@@ -57,13 +57,17 @@ export class CarService {
     );
   }
 
+  getAllCarsTodos(): Observable<Car[]> {
+    return this.http.get<Car[]>(`${this.apiUrl}`);
+  }
+
   getCarById(id: number): Observable<CarResponse> {
     console.log(`🚗 Buscando carro ID: ${id}`);
     return this.http.get<CarResponse>(`${this.apiUrl}/${id}`, {
       headers: this.getAuthHeaders()
     }).pipe(
-      tap((response) => {
-        console.log('📥 Carro encontrado:', response);
+      tap((response) => { 
+
       }),
       catchError((error) => {
         console.error('💥 Erro ao buscar carro:', error);
