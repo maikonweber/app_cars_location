@@ -1,79 +1,107 @@
-Características
-Trata-se de um sistema para gerenciar a reservas de veículos, a API deve disponibilizar as seguintes rotas:
+# Sistema de Reserva de Veículos
 
-[x]Login
+Este sistema permite gerenciar reservas de veículos, sem envolver cálculos de pagamento. Ele é dividido em duas aplicações: **Backend (API)** e **Frontend**.
 
+## Características da API
 
-Rota para cadastramento de usuário
-Rota para edição e remoção de usuário
+### Usuários
 
-[x] Rota para cadastramentos de veículos
-[X] Rota para edição e remoção de veículos
+* `[x]` Login (retorna JWT)
+* Cadastro de usuário
+* Edição e remoção de usuário
 
+### Veículos
 
-Rota para listagem de veículos cadastrados
+* `[x]` Cadastro de veículo
+* `[x]` Edição e remoção de veículo
+* Listagem de veículos cadastrados
 
-Rota para reserva de veículo 
-Rota para liberação de veículo reservado
-Rota para a listagem de veículos associados a um usuário
+### Reservas
 
-É um sistema de reserva e não de locação, portanto, não deve envolver cálculos de pagamento.
- 
+* Reserva de veículo
+* Liberação de veículo reservado
+* Listagem de veículos associados a um usuário
 
-QA :
-    [x] LOGIN
-            Login Susseso e Erro
-            JWT Autenticado
-    [x] USERS
-       [] Mudança não funciona
-    [x] Criar usuario funcio e pega erro de duplicadade
-    [x] Valide tras dados sensiveis
-    [x] Deletar usuario tropa permissões e gera erro
-        
-    Carros
-        [x] Criar um carro erro
-        [x] Reservas falta paramentro id para reservar
-        [X] Não deve ser possível reservar um veículo já reservado.
-        [x] Não deve ser possível um usuário reservar mais de um veículo.
-        [x] Filtro funciona
-        [x] Delete e Get all Funciona
+> Observação: O sistema é de **reserva**, não de locação. Não há cálculos de pagamento.
 
-Regras
-[x] As rotas com exceção da rota de login devem ser protegidas com o uso de token.
+## QA (Quality Assurance)
 
-Frontend []
-        [x] Pagina de Login 
-        [x] Salvar JWT no Login
-        [x] Interceptor de Request 
-        [x] Redirect botão de filter
-        [] Lista get Veiculos
-        [] Listagem de Veiculos
-        [] Filtros
-        [] Botão de reserva
-        
+### Login
 
- 
-Entrega
-A entrega do projeto deve ser feita via GIT, e o repositório compartilhado para os seguintes usuários: diegoa83 e dcastrohappmobi, após o compartilhamento você deve enviar um e-mail confirmando a entrega para: diego@happmobi.com.br e daniel.castro@happmobi.com.br.
+* `[x]` Login com sucesso e erro
+* `[x]` JWT autenticado
 
-Prazo
-O prazo limite para a entrega é 16/09/2025
+### Usuários
 
-Critérios de avaliação
-Implementação da API
-Implantação das Rotas
-Proteção das Rotas
-Regras de Negócio
-Tecnologias Utilizadas
-Estrutura e Organização do Código
-Clareza e Manutenibilidade do Código
-Organização de Arquivos
+* `[ ]` Edição de usuário não funciona
+* `[x]` Criar usuário funciona, captura erro de duplicidade
+* `[x]` Validação de dados sensíveis
+* `[x]` Deletar usuário gera erro sem permissões
 
+### Veículos
 
-Diferenciais na entrega
-Implantação de testes
-Conteinerização da aplicação com Docker
-Documentação com Swagger
+* `[x]` Criar veículo com erro
+* `[ ]` Reserva falta parâmetro `id`
+* `[X]` Não reservar veículo já reservado
+* `[x]` Usuário não pode reservar mais de um veículo
+* `[x]` Filtro funciona
+* `[x]` Delete e Get All funcionam
 
- 
-Obrigado pela disponibilidade, qualquer dúvida estamos à disposição
+### Regras
+
+* `[x]` Todas as rotas (exceto login) protegidas por token JWT
+
+## Frontend
+
+Funcionalidades implementadas:
+
+* `[x]` Página de login
+* `[x]` Salvar JWT no login
+* `[x]` Interceptor de requisições
+* `[x]` Redirecionamento via botão de filtro
+* `[ ]` Lista de veículos (GET)
+* `[ ]` Listagem de veículos
+* `[ ]` Filtros
+* `[ ]` Botão de reserva
+
+## Instalação
+
+O projeto pode ser executado de duas formas: **Docker** ou **manual**.
+
+### 1. Usando Docker Compose
+
+```bash
+git clone <repo-url>
+cd <repo>
+docker-compose up -d
+```
+
+Isso irá subir as duas aplicações (frontend e backend) automaticamente.
+
+### 2. Manualmente
+
+1. Clone o repositório
+
+```bash
+git clone <repo-url>
+cd <repo>
+```
+
+2. Entrar nas pastas das aplicações e instalar dependências
+
+```bash
+# Backend
+cd backend
+npm install
+npm run start:dev
+
+# Frontend
+cd ../frontend
+npm install
+npm run start:dev
+```
+
+As aplicações estarão disponíveis em:
+
+* Backend: `http://localhost:3000`
+* Frontend: `http://localhost:5173` (ou porta configurada)
