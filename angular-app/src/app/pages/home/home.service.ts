@@ -21,6 +21,7 @@ export interface DashboardData {
   providedIn: 'root'
 })
 export class HomeService {
+
   constructor(
     private carService: CarService,
     private userService: UserService
@@ -98,6 +99,17 @@ export class HomeService {
     );
   }
 
+  getCars(): Observable<Car[]> {
+    console.log('🚗 Buscando todos os carros...')
+    return this.carService.getAllCars().pipe(
+    map(response => {
+      const cars = Array.isArray(response.data) ? response.data : []
+        return cars
+        }), 
+        catchError(() => of([]))
+      )
+    }
+  ;
   // Buscar usuários ativos
   getActiveUsers(): Observable<User[]> {
     console.log('👥 Buscando usuários ativos...');

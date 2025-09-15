@@ -1,31 +1,57 @@
 <main class="home-container">
   <header class="home-header">
-    <div class="profile">
-      <img src="assets/avatar.png" alt="Avatar" />
-      <span>Olá, Marcos Silva</span>
+    <div class="greeting">
+      <h1>Olá, Marcos Silva</h1>
     </div>
-    <button class="btn-filter" routerLink="/filter">Filtro</button>
+    <div class="search-section">
+      <div class="search-bar">
+        <input type="text" placeholder="Buscar carro" />
+      </div>
+      <button class="btn-filter" routerLink="/filter">Filtrar</button>
+    </div>
   </header>
-
-  <section class="reservas">
-    <h3>Últimas reservas</h3>
-    <div class="cards">
-      <div class="card">
-        <img src="assets/cars/mini.png" alt="Mini Cooper" />
-        <p>Mini Cooper - 2021</p>
-        <small>SUV Médio - Motor 1.8 - 5 Lugares</small>
-      </div>
-      <div class="card">
-        <img src="assets/cars/jeep.png" alt="Jeep Compass" />
-        <p>Jeep Compass - 2021</p>
-        <small>SUV Médio - Motor 1.8 - 7 Lugares</small>
+    
+ <section class="reservas">
+  <h3>Últimas reservas</h3>
+  <div class="cards">
+    <div class="card" *ngFor="let car of cars">
+      <img [src]="car.imagem" [alt]="car.modelo" />
+      <div class="card-content">
+        <h4>{{ car.nome }} - {{ car.ano }}</h4>
+        <p>{{ car.tipo_modelo }}</p>
+        <p>Motor {{ car.potencia_do_motor }}</p>
+        <p>{{ car.numero_de_lugares }} Lugares</p>
+       
+        <button class="btn-alugar">Alugar</button>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer class="menu">
-    <button>Início</button>
-    <button>Central</button>
-    <button>Perfil</button>
+  <div class="qr-section">
+    <button class="btn-qr">Acessar por QR code</button>
+  </div>
+
+  <footer class="bottom-nav">
+    <button class="nav-item active">
+      <span class="nav-icon">🏠</span>
+      <span class="nav-label">Início</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">📅</span>
+      <span class="nav-label">Central</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">🚗</span>
+      <span class="nav-label">Carros</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">🔔</span>
+      <span class="nav-label">Notificações</span>
+    </button>
+    <button class="nav-item">
+      <span class="nav-icon">👤</span>
+      <span class="nav-label">Perfil</span>
+    </button>
   </footer>
 </main>

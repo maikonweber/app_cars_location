@@ -1,31 +1,94 @@
 <main class="filter-container">
-  <header>
-    <input type="text" placeholder="Buscar carro" />
+  <header class="filter-header">
+    <div class="search-bar">
+      <input 
+        type="text" 
+        placeholder="BUSCA" 
+        [(ngModel)]="searchTerm"
+        (input)="onSearchChange()" />
+    </div>
+    <div class="header-actions">
+      <button class="btn-cancel" (click)="goBack()">CANCELAR</button>
+      <button class="btn-filters active">FILTROS</button>
+      <button class="btn-clear" (click)="clearFilters()">LIMPAR</button>
+    </div>
   </header>
 
   <section class="filters">
-    <h3>Tipos de carrocerias</h3>
-    <div class="checkbox-group">
-      <label><input type="checkbox" /> Hatch compacto</label>
-      <label><input type="checkbox" /> SUV Médio</label>
-      <label><input type="checkbox" /> Sedã Médio</label>
+    <div class="filter-section">
+      <h3>Tipos de carrocerias</h3>
+      <div class="checkbox-group">
+        <label 
+          class="checkbox-item" 
+          *ngFor="let bodyType of bodyTypes">
+          <input 
+            type="checkbox" 
+            [checked]="selectedBodyTypes.includes(bodyType)"
+            (change)="onBodyTypeChange(bodyType, $event.target.checked)" />
+          <span class="checkmark"></span>
+          {{ bodyType }}
+        </label>
+      </div>
     </div>
 
-    <h3>Tipos de motores</h3>
-    <div class="tags">
-      <span class="tag">Motor 1.0 ✕</span>
-      <span class="tag">Motor 1.6 ✕</span>
-      <button class="add">+</button>
+    <div class="filter-section">
+      <h3>Tipos de motores</h3>
+      <div class="engine-buttons">
+        <button 
+          class="engine-btn" 
+          *ngFor="let engine of engines"
+          [class.active]="selectedEngines.includes(engine)"
+          (click)="onEngineChange(engine)">
+          {{ engine }}
+        </button>
+      </div>
     </div>
 
-    <h3>Quantidade de lugares</h3>
-    <div class="seats">
-      <button>02</button>
-      <button>04</button>
-      <button>05</button>
-      <button>07</button>
+    <div class="filter-section">
+      <h3>Quantidade de lugares</h3>
+      <div class="seats-buttons">
+        <button 
+          class="seat-btn" 
+          *ngFor="let seat of seats"
+          [class.active]="selectedSeats.includes(seat)"
+          (click)="onSeatChange(seat)">
+          {{ seat }}
+        </button>
+      </div>
     </div>
 
-    <button class="apply">APLICAR FILTRO</button>
+    <div class="results-section" *ngIf="filteredCars.length > 0">
+      <h3>Resultados ({{ filteredCars.length }} carros encontrados)</h3>
+      <div class="cars-grid">
+        <div 
+          class="car-card" 
+          *ngFor="let car of filteredCars"
+          (click)="onCarClick(car)">
+          <div class="car-image">
+            <img [src]="car.image" [alt]="car.marca + ' ' + car.modelo" />
+          </div>
+          <div class="car-info">
+            <h4>{{ car.marca }} {{ car.modelo }}</h4>
+            <p>{{ car.type }}</p>
+            <p>{{ car.engine }}</p>
+            <p>{{ car.seats }}</p>
+            <p class="car-year">{{ car.ano }}</p>
+            <p class="car-price">R$ {{ car.preco | number:'1.2-2' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="no-results" *ngIf="!isLoading && filteredCars.length === 0">
+      <p>Nenhum carro encontrado com os filtros aplicados.</p>
+    </div>
+
+    <div class="loading" *ngIf="isLoading">
+      <p>Carregando carros...</p>
+    </div>
+
+    <div class="error" *ngIf="errorMessage">
+      <p>{{ errorMessage }}</p>
+    </div>
   </section>
 </main>

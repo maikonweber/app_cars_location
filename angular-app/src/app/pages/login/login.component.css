@@ -1,65 +1,74 @@
 /* login.component.css */
-/* Reset específico para o componente de login */
-.login-container * {
-  box-sizing: border-box;
-}
-
-
 .login-container {
   width: 100%;
-  height: 100%;
-  min-height: 100vh;              /* cobre a altura total da tela */
-  max-height: 100vh;              /* evita que ultrapasse a altura da tela */
-  overflow: hidden;               /* remove qualquer scroll */
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0d1b2a;            /* fundo azul escuro */
-  background-size: cover;         /* garante que estenda */
-  background-position: center;
-  background-repeat: no-repeat;
+  background: #1a1a1a; /* Fundo escuro como no Figma */
   font-family: "Inter", sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .login-card {
-  position: relative;
-  width: 360px;
-  max-width: 95%; /* 👈 para telas menores */
-  overflow: hidden; /* evita que o logo vaze */
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #fff;
 }
 
-.logo img {
+.logo {
+  margin-bottom: 3rem;
+}
+
+.logo-g {
   width: 80px;
-  margin-bottom: 1rem;
+  height: 80px;
+  background: #e63946; /* Vermelho do Figma */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
 }
 
 .logo h1 {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 2rem;
+  margin: 0;
+  color: #fff;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  border-radius: 32px;
+  padding: 1rem 1.2rem;
+  border-radius: 12px;
   border: none;
   outline: none;
   background: #fff;
-  color: #000;
+  color: #333;
   font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  color: #999;
 }
 
 .btn-login {
   width: 100%;
-  padding: 0.9rem;
+  padding: 1rem;
   border: none;
-  border-radius: 32px;
-  background: #e63946; /* vermelho botão */
+  border-radius: 12px;
+  background: #e63946; /* Vermelho do Figma */
   color: #fff;
   font-size: 1rem;
   font-weight: bold;
@@ -68,15 +77,14 @@ input {
   transition: background 0.3s ease;
 }
 
-.btn-login:hover {
-  background: #c62828;
+.btn-login:hover:not(:disabled) {
+  background: #d62828;
 }
 
 .btn-login:disabled {
   background: #666;
   cursor: not-allowed;
 }
-
 
 .error-message {
   background: #ff4444;
@@ -96,14 +104,19 @@ input {
 
 .forgot {
   display: block;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: #ddd;
+  color: #ccc;
   text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.forgot:hover {
+  color: #fff;
 }
 
 .register {
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   font-size: 0.9rem;
   color: #ccc;
 }
@@ -112,81 +125,55 @@ input {
   color: #fff;
   font-weight: bold;
   text-decoration: underline;
+  transition: color 0.3s ease;
 }
 
-/* container para posicionamento relativo */
-.login-card {
-  position: relative; /* 👈 importante para o filho absoluto */
-  background: transparent;
-  padding: 2rem;
-  border-radius: 16px;
-  width: 360px;
-  text-align: center;
-  color: #fff;
-  overflow: hidden; /* garante que nada vaze fora */
+.register a:hover {
+  color: #e63946;
 }
 
-/* logo de fundo */
-.logo-bg {
-  position: absolute;
-  top: -40px;       /* sobe um pouco */
-  right: -60px;     /* empurra para direita */
-  z-index: 0;       /* fica atrás */
-  opacity: 0.05;    /* bem fraquinho */
-}
-
-.logo-bg img {
-  width: 300px;     /* bem maior que o logo normal */
-  height: auto;
-}
-
-/* logo principal fica acima */
-.logo {
-  position: relative;
-  z-index: 1;
-}
-
-/* telas menores que 768px */
+/* Responsividade */
 @media (max-width: 768px) {
   .login-card {
-    width: 90%; /* ocupa quase toda a largura */
-    padding: 1.5rem;
+    max-width: 350px;
   }
 
-  .logo-bg img {
-    width: 200px;  /* reduz tamanho do logo fundo */
-    top: -30px;
-    right: -40px;
-  }
-
-  .logo img {
-    width: 60px; /* reduz o logo principal */
+  .logo-g {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
   }
 
   .logo h1 {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
   }
 }
 
-/* telas menores que 480px */
 @media (max-width: 480px) {
+  .login-container {
+    padding: 15px;
+  }
+
   .login-card {
-    padding: 1rem;
+    max-width: 100%;
   }
 
-  .logo-bg img {
-    width: 150px;
-    top: -20px;
-    right: -30px;
+  .logo-g {
+    width: 60px;
+    height: 60px;
+    font-size: 1.8rem;
   }
 
-  .logo img {
-    width: 50px;
+  .logo h1 {
+    font-size: 1.3rem;
+  }
+
+  input {
+    padding: 0.9rem 1rem;
   }
 
   .btn-login {
-    font-size: 0.9rem;
-    padding: 0.8rem;
+    padding: 0.9rem;
   }
 }
 

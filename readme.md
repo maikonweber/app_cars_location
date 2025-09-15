@@ -42,12 +42,15 @@ Regras
 [x] As rotas com exceção da rota de login devem ser protegidas com o uso de token.
 
 Frontend []
-        [] Pagina de Login 
-        [] Salvar JWT no Login
-        [] Interceptor de Request 
-        [] CSS Quebrado
+        [x] Pagina de Login 
+        [x] Salvar JWT no Login
+        [x] Interceptor de Request 
+        [x] Redirect botão de filter
+        [] Lista get Veiculos
         [] Listagem de Veiculos
         [] Filtros
+        [] Botão de reserva
+        
 
  
 Entrega

@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { FilterService, FilterOptions, FilterResults } from './filter.service';
-import { Car } from '../cars/car.service';
-import { User } from '../users/user.service';
+import { Router } from '@angular/router';
+import { CarService, Car } from '../cars/car.service';
+
+interface FilteredCar extends Car {
+  type: string;
+  engine: string;
+  seats: string;
+  image: string;
+}
 
 @Component({
   selector: 'app-filter',
@@ -13,214 +19,210 @@ import { User } from '../users/user.service';
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent implements OnInit {
-  filterOptions: FilterOptions | null = null;
-  filterResults: FilterResults | null = null;
+  allCars: Car[] = [];
+  filteredCars: FilteredCar[] = [];
   isLoading = false;
   errorMessage = '';
 
-  // Filtros de carros
-  carFilters = {
-    marca: '',
-    modelo: '',
-    anoMin: undefined as number | undefined,
-    anoMax: undefined as number | undefined,
-    precoMin: undefined as number | undefined,
-    precoMax: undefined as number | undefined,
-    cor: '',
-    disponivel: undefined as boolean | undefined
-  };
-
-  // Filtros de usuários
-  userFilters = {
-    nome: '',
-    email: '',
-    role: '',
-    ativo: undefined as boolean | undefined,
-    cidade: '',
-    estado: ''
-  };
-
-  // Busca por texto
+  // Filtros
   searchTerm = '';
-  searchType: 'cars' | 'users' | 'all' = 'all';
+  selectedBodyTypes: string[] = [];
+  selectedEngines: string[] = [];
+  selectedSeats: string[] = [];
 
-  constructor(private filterService: FilterService) {}
+  // Opções de filtros
+  bodyTypes = [
+    'Hatch compacto', 'Hatch médio', 'SUV compacto', 'SUV médio', 'SUV grande',
+    'Crossover', 'Coupé', 'Picape leve', 'Picape leve-média', 'Picape média',
+    'Sedan Compacto', 'Sedan Médio', 'Sedan Grande', 'Minivan/monovolume',
+    'Utilitário leve', 'Utilitário'
+  ];
+
+  engines = ['Motor 1.0', 'Motor 1.4', 'Motor 1.5', 'Motor 1.8', 'Motor 2.0'];
+  seats = ['02', '03', '04', '05', '06', '07'];
+
+  constructor(
+    private carService: CarService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
-    this.loadFilterOptions();
+    this.loadAllCars();
   }
 
-  loadFilterOptions() {
-    console.log('🔍 Carregando opções de filtro...');
+  loadAllCars() {
+    console.log('🚗 Carregando todos os carros...');
     this.isLoading = true;
+    this.errorMessage = '';
 
-    this.filterService.getFilterOptions().subscribe({
-      next: (options) => {
-        this.filterOptions = options;
+    this.carService.getAllCars().subscribe({
+      next: (response) => {
+        if (response.success && Array.isArray(response.data)) {
+          this.allCars = response.data;
+          this.transformCarsForDisplay();
+          this.applyFilters();
+        } else {
+          this.errorMessage = 'Erro ao carregar dados dos carros';
+        }
         this.isLoading = false;
-        console.log('✅ Opções de filtro carregadas:', options);
+        console.log('✅ Carros carregados:', this.allCars);
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = 'Erro ao carregar opções de filtro';
-        console.error('❌ Erro ao carregar opções:', error);
+        this.errorMessage = 'Erro ao carregar carros';
+        console.error('❌ Erro ao carregar carros:', error);
       }
     });
+  }
+
+  transformCarsForDisplay() {
+    this.filteredCars = this.allCars.map(car => ({
+      ...car,
+      type: this.getCarType(car),
+      engine: this.getEngineType(car),
+      seats: this.getSeatsCount(car),
+      image: this.getCarImage(car)
+    }));
+  }
+
+  getCarType(car: Car): string {
+    // Mapear baseado na marca/modelo para tipos de carroceria
+    const model = car.modelo.toLowerCase();
+    if (model.includes('hatch') || model.includes('ka') || model.includes('gol')) {
+      return 'Hatch compacto';
+    } else if (model.includes('compass') || model.includes('toro') || model.includes('duster')) {
+      return 'SUV Médio';
+    } else if (model.includes('sedan') || model.includes('jetta') || model.includes('versa')) {
+      return 'Sedan Médio';
+    } else if (model.includes('picape') || model.includes('strada') || model.includes('saveiro')) {
+      return 'Picape leve';
+    } else if (model.includes('utilitario') || model.includes('doblo') || model.includes('fiorino')) {
+      return 'Utilitário leve';
+    }
+    return 'SUV compacto';
+  }
+
+  getEngineType(car: Car): string {
+    // Mapear baseado no ano para tipo de motor
+    if (car.ano >= 2020) return 'Motor 2.0';
+    if (car.ano >= 2018) return 'Motor 1.8';
+    if (car.ano >= 2016) return 'Motor 1.6';
+    if (car.ano >= 2014) return 'Motor 1.4';
+    return 'Motor 1.0';
+  }
+
+  getSeatsCount(car: Car): string {
+    // Mapear baseado no tipo de carro
+    const type = this.getCarType(car);
+    if (type.includes('Utilitário')) return '2 Lugares';
+    if (type.includes('SUV') || type.includes('Picape')) return '7 Lugares';
+    return '5 Lugares';
+  }
+
+  getCarImage(car: Car): string {
+    // Mapear para imagens baseadas na marca/modelo
+    const model = car.modelo.toLowerCase();
+    if (model.includes('mini')) return 'assets/cars/mini.png';
+    if (model.includes('compass')) return 'assets/cars/jeep.png';
+    if (model.includes('ka')) return 'assets/cars/ford-ka.png';
+    if (model.includes('duster')) return 'assets/cars/duster.png';
+    if (model.includes('toro')) return 'assets/cars/toro.png';
+    if (model.includes('t-cross')) return 'assets/cars/t-cross.png';
+    if (model.includes('strada')) return 'assets/cars/strada.png';
+    if (model.includes('saveiro')) return 'assets/cars/saveiro.png';
+    if (model.includes('versa')) return 'assets/cars/versa.png';
+    if (model.includes('jetta')) return 'assets/cars/jetta.png';
+    if (model.includes('doblo')) return 'assets/cars/doblo.png';
+    if (model.includes('fiorino')) return 'assets/cars/fiorino.png';
+    if (model.includes('partner')) return 'assets/cars/partner.png';
+    return 'assets/cars/default.png';
   }
 
   applyFilters() {
     console.log('🔍 Aplicando filtros...');
-    this.isLoading = true;
-    this.errorMessage = '';
+    let filtered = [...this.filteredCars];
 
-    const filters = {
-      carFilters: this.carFilters,
-      userFilters: this.userFilters
-    };
+    // Filtro por busca de texto
+    if (this.searchTerm.trim()) {
+      const searchLower = this.searchTerm.toLowerCase();
+      filtered = filtered.filter(car => 
+        car.marca.toLowerCase().includes(searchLower) ||
+        car.modelo.toLowerCase().includes(searchLower) ||
+        car.type.toLowerCase().includes(searchLower)
+      );
+    }
 
-    this.filterService.applyFilters(filters).subscribe({
-      next: (results) => {
-        this.filterResults = results;
-        this.isLoading = false;
-        console.log('✅ Filtros aplicados:', results);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.errorMessage = 'Erro ao aplicar filtros';
-        console.error('❌ Erro ao aplicar filtros:', error);
-      }
-    });
+    // Filtro por tipo de carroceria
+    if (this.selectedBodyTypes.length > 0) {
+      filtered = filtered.filter(car => 
+        this.selectedBodyTypes.includes(car.type)
+      );
+    }
+
+    // Filtro por motor
+    if (this.selectedEngines.length > 0) {
+      filtered = filtered.filter(car => 
+        this.selectedEngines.includes(car.engine)
+      );
+    }
+
+    // Filtro por lugares
+    if (this.selectedSeats.length > 0) {
+      filtered = filtered.filter(car => 
+        this.selectedSeats.some(seat => car.seats.includes(seat))
+      );
+    }
+
+    this.filteredCars = filtered;
+    console.log('✅ Filtros aplicados. Carros encontrados:', filtered.length);
   }
 
-  searchByText() {
-    if (!this.searchTerm.trim()) {
-      this.filterResults = null;
-      return;
+  onBodyTypeChange(bodyType: string, checked: boolean) {
+    if (checked) {
+      this.selectedBodyTypes.push(bodyType);
+    } else {
+      this.selectedBodyTypes = this.selectedBodyTypes.filter(type => type !== bodyType);
     }
+    this.applyFilters();
+  }
 
-    console.log('🔍 Buscando por texto:', this.searchTerm);
-    this.isLoading = true;
-    this.errorMessage = '';
-
-    if (this.searchType === 'cars' || this.searchType === 'all') {
-      this.filterService.searchCarsByText(this.searchTerm).subscribe({
-        next: (cars) => {
-          this.filterResults = {
-            cars,
-            users: [],
-            totalCars: cars.length,
-            totalUsers: 0
-          };
-          this.isLoading = false;
-          console.log('✅ Carros encontrados:', cars);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = 'Erro ao buscar carros';
-          console.error('❌ Erro na busca de carros:', error);
-        }
-      });
+  onEngineChange(engine: string) {
+    if (this.selectedEngines.includes(engine)) {
+      this.selectedEngines = this.selectedEngines.filter(e => e !== engine);
+    } else {
+      this.selectedEngines = [engine]; // Apenas um motor selecionado por vez
     }
+    this.applyFilters();
+  }
 
-    if (this.searchType === 'users' || this.searchType === 'all') {
-      this.filterService.searchUsersByText(this.searchTerm).subscribe({
-        next: (users) => {
-          if (this.searchType === 'users' || this.searchType === 'all') {
-            this.filterResults = {
-              cars: this.searchType === 'all' ? (this.filterResults?.cars || []) : [],
-              users,
-              totalCars: this.searchType === 'all' ? (this.filterResults?.totalCars || 0) : 0,
-              totalUsers: users.length
-            };
-          }
-          this.isLoading = false;
-          console.log('✅ Usuários encontrados:', users);
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = 'Erro ao buscar usuários';
-          console.error('❌ Erro na busca de usuários:', error);
-        }
-      });
+  onSeatChange(seat: string) {
+    if (this.selectedSeats.includes(seat)) {
+      this.selectedSeats = this.selectedSeats.filter(s => s !== seat);
+    } else {
+      this.selectedSeats = [seat]; // Apenas uma quantidade de lugares por vez
     }
+    this.applyFilters();
   }
 
   clearFilters() {
     console.log('🧹 Limpando filtros...');
-    this.carFilters = {
-      marca: '',
-      modelo: '',
-      anoMin: undefined,
-      anoMax: undefined,
-      precoMin: undefined,
-      precoMax: undefined,
-      cor: '',
-      disponivel: undefined
-    };
-
-    this.userFilters = {
-      nome: '',
-      email: '',
-      role: '',
-      ativo: undefined,
-      cidade: '',
-      estado: ''
-    };
-
     this.searchTerm = '';
-    this.filterResults = null;
+    this.selectedBodyTypes = [];
+    this.selectedEngines = [];
+    this.selectedSeats = [];
+    this.applyFilters();
   }
 
-  clearSearch() {
-    console.log('🧹 Limpando busca...');
-    this.searchTerm = '';
-    this.filterResults = null;
+  onSearchChange() {
+    this.applyFilters();
   }
 
-  // Botões de ação
-  onViewCarDetails(car: Car) {
-    console.log('🔍 Visualizando detalhes do carro:', car);
+  onCarClick(car: FilteredCar) {
+    console.log('Carro selecionado:', car);
     // Implementar navegação para detalhes do carro
   }
 
-  onViewUserDetails(user: User) {
-    console.log('🔍 Visualizando detalhes do usuário:', user);
-    // Implementar navegação para detalhes do usuário
-  }
-
-  onEditCar(car: Car) {
-    console.log('✏️ Editando carro:', car);
-    // Implementar edição do carro
-  }
-
-  onEditUser(user: User) {
-    console.log('✏️ Editando usuário:', user);
-    // Implementar edição do usuário
-  }
-
-  onDeleteCar(car: Car) {
-    console.log('🗑️ Deletando carro:', car);
-    if (confirm(`Tem certeza que deseja deletar o carro ${car.marca} ${car.modelo}?`)) {
-      // Implementar deleção do carro
-      console.log('Carro deletado:', car);
-    }
-  }
-
-  onDeleteUser(user: User) {
-    console.log('🗑️ Deletando usuário:', user);
-    if (confirm(`Tem certeza que deseja deletar o usuário ${user.nome}?`)) {
-      // Implementar deleção do usuário
-      console.log('Usuário deletado:', user);
-    }
-  }
-
-  onExportResults() {
-    console.log('📤 Exportando resultados...');
-    // Implementar exportação dos resultados
-  }
-
-  onPrintResults() {
-    console.log('🖨️ Imprimindo resultados...');
-    window.print();
+  goBack() {
+    this.router.navigate(['/home']);
   }
 }
