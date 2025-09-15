@@ -110,17 +110,5 @@ export class HomeService {
       )
     }
   ;
-  // Buscar usuários ativos
-  getActiveUsers(): Observable<User[]> {
-    console.log('👥 Buscando usuários ativos...');
-    return this.userService.getAllUsers().pipe(
-      map(response => {
-        const users = Array.isArray(response.data) ? response.data : [];
-        return users
-          .filter(user => user.ativo)
-          .slice(0, 10);
-      }),
-      catchError(() => of([]))
-    );
-  }
+
 }

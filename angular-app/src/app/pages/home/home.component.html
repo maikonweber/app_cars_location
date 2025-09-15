@@ -11,22 +11,22 @@
     </div>
   </header>
     
- <section class="reservas">
-  
-  <h3>Veiculos </h3>
-  <div *ngIf="isLoading">Carregando...</div>
-  <div *ngIf="errorMessage">{{ errorMessage }}</div>
-  
-  <div class="cards">
-  <div class="card" *ngFor="let car of cars">
-    <img [src]="car.url" [alt]="car.nome" />
-    <h4>{{ car.nome }} - {{ car.ano }}</h4>
-    <p>{{ car.tipo_modelo }}</p>
-    <p>Motor {{ car.potencia_do_motor }} cv</p>
-    <p>{{ car.numero_de_lugares }} Lugares</p>
-  </div>
-</div>
-</section>
+  <section class="reservas">
+    <h3>Veículos</h3>
+    
+    <div *ngIf="isLoading">Carregando...</div>
+    <div *ngIf="errorMessage">{{ errorMessage }}</div>
+    
+    <div class="cards">
+    <div class="card" *ngFor="let car of cars">
+        <img [src]="car.imageUrl" alt="Imagem do carro" class="car-image" />
+        <div class="card-content">
+          <h4>{{ car._id }} - {{ car.modelo }}</h4>
+          <p>Ano: {{ car.ano }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <div class="qr-section">
     <button class="btn-qr">Acessar por QR code</button>
