@@ -1,114 +1,95 @@
-Sistema de Reserva de Veículos
+# Sistema de Reserva de Veículos
 
-Este sistema permite gerenciar reservas de veículos, sem envolver cálculos de pagamento. Ele é dividido em duas aplicações: Backend (API) e Frontend.
+Este sistema permite gerenciar reservas de veículos, sem envolver cálculos de pagamento. Ele é dividido em duas aplicações: **Backend (API)** e **Frontend**.
 
-Características da API
+## Características da API
 
-A API disponibiliza as seguintes rotas:
+### Usuários
 
-Usuários
+* `[x]` Login (retorna JWT)
+* Cadastro de usuário
+* Edição e remoção de usuário
 
-[x] Login (retorna JWT)
+### Veículos
 
-Cadastro de usuário
+* `[x]` Cadastro de veículo
+* `[x]` Edição e remoção de veículo
+* Listagem de veículos cadastrados
 
-Edição e remoção de usuário
+### Reservas
 
-Veículos
+* Reserva de veículo
+* Liberação de veículo reservado
+* Listagem de veículos associados a um usuário
 
-[x] Cadastro de veículo
+> Observação: O sistema é de **reserva**, não de locação. Não há cálculos de pagamento.
 
-[x] Edição e remoção de veículo
+## QA (Quality Assurance)
 
-Listagem de veículos cadastrados
+### Login
 
-Reservas
+* `[x]` Login com sucesso e erro
+* `[x]` JWT autenticado
 
-Reserva de veículo
+### Usuários
 
-Liberação de veículo reservado
+* `[ ]` Edição de usuário não funciona
+* `[x]` Criar usuário funciona, captura erro de duplicidade
+* `[x]` Validação de dados sensíveis
+* `[x]` Deletar usuário gera erro sem permissões
 
-Listagem de veículos associados a um usuário
+### Veículos
 
-Observação: O sistema é de reserva, não de locação. Não há cálculos de pagamento.
+* `[x]` Criar veículo com erro
+* `[ ]` Reserva falta parâmetro `id`
+* `[X]` Não reservar veículo já reservado
+* `[x]` Usuário não pode reservar mais de um veículo
+* `[x]` Filtro funciona
+* `[x]` Delete e Get All funcionam
 
-QA (Quality Assurance)
-Login
+### Regras
 
-[x] Login com sucesso e erro
+* `[x]` Todas as rotas (exceto login) protegidas por token JWT
 
-[x] JWT autenticado
-
-Usuários
-
-[ ] Edição de usuário não funciona
-
-[x] Criar usuário funciona, captura erro de duplicidade
-
-[x] Validação de dados sensíveis
-
-[x] Deletar usuário gera erro sem permissões
-
-Veículos
-
-[x] Criar veículo com erro
-
-[ ] Reserva falta parâmetro id
-
-[X] Não reservar veículo já reservado
-
-[x] Usuário não pode reservar mais de um veículo
-
-[x] Filtro funciona
-
-[x] Delete e Get All funcionam
-
-Regras
-
-[x] Todas as rotas (exceto login) protegidas por token JWT
-
-Frontend
+## Frontend
 
 Funcionalidades implementadas:
 
-[x] Página de login
+* `[x]` Página de login
+* `[x]` Salvar JWT no login
+* `[x]` Interceptor de requisições
+* `[x]` Redirecionamento via botão de filtro
+* `[ ]` Lista de veículos (GET)
+* `[ ]` Listagem de veículos
+* `[ ]` Filtros
+* `[ ]` Botão de reserva
 
-[x] Salvar JWT no login
+## Instalação
 
-[x] Interceptor de requisições
+O projeto pode ser executado de duas formas: **Docker** ou **manual**.
 
-[x] Redirecionamento via botão de filtro
+### 1. Usando Docker Compose
 
-[ ] Lista de veículos (GET)
-
-[ ] Listagem de veículos
-
-[ ] Filtros
-
-[ ] Botão de reserva
-
-Instalação
-
-O projeto pode ser executado de duas formas: Docker ou manual.
-
-1. Usando Docker Compose
+```bash
 git clone <repo-url>
 cd <repo>
 docker-compose up -d
-
+```
 
 Isso irá subir as duas aplicações (frontend e backend) automaticamente.
 
-2. Manualmente
+### 2. Manualmente
 
-Clone o repositório
+1. Clone o repositório
 
+```bash
 git clone <repo-url>
 cd <repo>
+```
 
+2. Entrar nas pastas das aplicações e instalar dependências
 
-Entrar nas pastas das aplicações e instalar dependências
-
+```bash
 # Backend
 cd backend
 npm install
@@ -118,10 +99,9 @@ npm run start:dev
 cd ../frontend
 npm install
 npm run start:dev
-
+```
 
 As aplicações estarão disponíveis em:
 
-Backend: http://localhost:3000
-
-Frontend: http://localhost:5173 (ou porta configurada)
+* Backend: `http://localhost:3000`
+* Frontend: `http://localhost:5173` (ou porta configurada)
