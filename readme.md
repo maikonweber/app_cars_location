@@ -33,7 +33,7 @@ Este sistema permite gerenciar reservas de veículos, sem envolver cálculos de 
 
 ### Usuários
 
-* `[ ]` Edição de usuário não funciona
+* `[x]` Edição de usuário não funciona
 * `[x]` Criar usuário funciona, captura erro de duplicidade
 * `[x]` Validação de dados sensíveis
 * `[x]` Deletar usuário gera erro sem permissões
@@ -41,7 +41,7 @@ Este sistema permite gerenciar reservas de veículos, sem envolver cálculos de 
 ### Veículos
 
 * `[x]` Criar veículo
-* `[ ]` Reserva Veiculo
+* `[x]` Reserva Veiculo
 * `[X]` Não reservar veículo já reservado
 * `[x]` Usuário não pode reservar mais de um veículo
 * `[x]` Filtro funciona
