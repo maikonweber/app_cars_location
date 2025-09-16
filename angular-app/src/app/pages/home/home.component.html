@@ -1,8 +1,10 @@
 <main class="home-container">
   <header class="home-header">
-    <div class="greeting">
-      <h1>Olá, Marcos Silva</h1>
+    <div class="profile">
+      <img src="https://via.placeholder.com/80" alt="Avatar" class="profile-avatar">
+      <h1 class="profile-name">Marcos Silva</h1>
     </div>
+
     <div class="search-section">
       <div class="search-bar">
         <input type="text" placeholder="Buscar carro" />
@@ -17,20 +19,21 @@
     <div *ngIf="isLoading">Carregando...</div>
     <div *ngIf="errorMessage">{{ errorMessage }}</div>
     
-   <div *ngIf="cars.length > 0; else noCars">
-  <div *ngFor="let car of cars" class="car-card">
-    <h3>{{ car.nome }}</h3>
-    <p>{{ car.ano }} - {{ car.tipo_modelo }}</p>
-    <p>Lugares: {{ car.numero_de_lugares }}</p>
-    <button class="reserve-button" > Reservar </button>
-    <img [src]="car.url" alt="{{ car.nome }}" width="200">
-  </div>
-</div>
+    <div *ngIf="cars.length > 0; else noCars" class="car-list">
+      <div *ngFor="let car of cars" class="car-card">
+        <img [src]="car.url" alt="{{ car.nome }}" class="car-img">
+        <div class="car-info">
+          <h3>{{ car.nome }}</h3>
+          <p>{{ car.ano }} - {{ car.tipo_modelo }}</p>
+          <p>Lugares: {{ car.numero_de_lugares }}</p>
+          <button class="reserve-button">Reservar</button>
+        </div>
+      </div>
+    </div>
 
-<ng-template #noCars>
-  <p>Nenhum carro encontrado.</p>
-</ng-template>
-
+    <ng-template #noCars>
+      <p>Nenhum carro encontrado.</p>
+    </ng-template>
   </section>
 
   <div class="qr-section">

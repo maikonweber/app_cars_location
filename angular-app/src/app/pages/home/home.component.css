@@ -1,11 +1,12 @@
+
 /* Container principal */
 .home-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f8f9fa;
+  background-color: #f4f6f9;
   font-family: 'Inter', sans-serif;
-  padding: 0;
+  padding-bottom: 60px; /* espaço pro footer fixo */
   box-sizing: border-box;
   position: relative;
 }
@@ -13,21 +14,40 @@
 /* Header */
 .home-header {
   background: #fff;
-  padding: 20px 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  padding: 24px 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-.greeting h1 {
-  font-size: 1.5rem;
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.profile-name {
+  margin-top: 8px;
+  font-size: 1.4rem;
   font-weight: 600;
   color: #333;
-  margin: 0 0 16px 0;
 }
 
+/* Busca */
 .search-section {
   display: flex;
   gap: 12px;
-  align-items: center;
+  width: 100%;
 }
 
 .search-bar {
@@ -38,211 +58,91 @@
   width: 100%;
   padding: 12px 16px;
   border: 1px solid #ddd;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 1rem;
   background: #f8f9fa;
-  box-sizing: border-box;
-}
-
-.search-bar input::placeholder {
-  color: #999;
-}
-
-.profile_content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
 }
 
 .btn-filter {
   background-color: #e63946;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 12px 16px;
+  border-radius: 10px;
+  padding: 12px 20px;
   cursor: pointer;
   font-weight: 600;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.reserve-button {
-  background-color: green;
-  width: 100%;
-  right: 100%;
+  font-size: 0.95rem;
 }
 
 .btn-filter:hover {
   background-color: #d62828;
 }
 
-/* Seção de reservas */
+/* Lista de carros */
 .reservas {
-  display: flex;
-  flex-direction: row;
-  padding: 24px 16px;
   flex: 1;
+  padding: 20px 16px;
 }
 
 .reservas h3 {
   margin-bottom: 16px;
   color: #333;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 600;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 24px;
-}
-
-.card {
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  padding: 16px;
+.car-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition: transform 0.2s ease;
+  gap: 16px;
 }
 
-.card:hover {
-  transform: translateY(-2px);
+.car-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 16px;
 }
 
-.card img {
-  width: 100%;
+.car-img {
+  width: 120px;
   height: 80px;
-  object-fit: contain;
-  margin-bottom: 12px;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-.card-content h4 {
-  font-size: 1rem;
+.car-info {
+  flex: 1;
+}
+
+.car-info h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: #333;
-  margin: 0 0 4px 0;
+  color: #222;
 }
 
-.card-content p {
-  font-size: 0.85rem;
-  color: #666;
+.car-info p {
   margin: 2px 0;
-  line-height: 1.3;
+  font-size: 0.9rem;
+  color: #555;
 }
 
-/* QR Section */
-.qr-section {
-  padding: 0 16px 24px;
-}
-
-.btn-qr {
-  width: 100%;
-  background: #007bff;
+.reserve-button {
+  margin-top: 10px;
+  background-color: #28a745;
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 12px;
-  font-size: 1rem;
+  padding: 8px 12px;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s ease;
 }
 
-.btn-qr:hover {
-  background: #0056b3;
-}
-
-/* Bottom Navigation */
-.bottom-nav {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 12px 0;
-  background-color: #fff;
-  border-top: 1px solid #e9ecef;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.nav-item {
-  background: none;
-  border: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-  min-width: 60px;
-}
-
-.nav-item:hover {
-  background: #f8f9fa;
-}
-
-.nav-item.active {
-  color: #e63946;
-}
-
-.nav-item.active .nav-icon {
-  font-size: 1.2rem;
-}
-
-.nav-icon {
-  font-size: 1.1rem;
-  margin-bottom: 4px;
-}
-
-.nav-label {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #666;
-}
-
-.nav-item.active .nav-label {
-  color: #e63946;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .cards {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  
-  .search-section {
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  .btn-filter {
-    width: 100%;
-  }
-}
-
-@media (max-width: 480px) {
-  .home-header {
-    padding: 16px 12px;
-  }
-  
-  .reservas {
-    padding: 20px 12px;
-  }
-  
-  .qr-section {
-    padding: 0 12px 20px;
-  }
-  
-  .greeting h1 {
-    font-size: 1.3rem;
-  }
+.reserve-button:hover {
+  background-color: #218838;
 }

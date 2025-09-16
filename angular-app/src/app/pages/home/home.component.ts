@@ -56,27 +56,7 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.homeService.getFeaturedCars().subscribe({
-      next: (response: any) => {
-        console.log(response)
-        if (response) {
-          console.log('🏠 Dados do dashboard carregados:', response);
-          this.ngZone.run(() => {
-          this.cars = response  ;
-          });
-          console.log('🚗 Carros recentes carregados:', this.recentCars);
-        } else {
-          this.errorMessage = 'Falha ao carregar carros recentes';
-          console.error('❌', this.errorMessage);
-        }
-        this.isLoading = false;
-      },
-      error: (error: any) => {
-        this.errorMessage = 'Erro ao carregar carros recentes';
-        console.error('❌', this.errorMessage, error);
-        this.isLoading = false;
-      }
-    });
+   
   }
 
   
