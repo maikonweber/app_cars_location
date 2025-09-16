@@ -29,7 +29,17 @@ export class HomeService {
   ) { }
 
 
-
+  getFeaturedCars(): Observable<Car[]> {
+    console.log('⭐ Buscando carros em destaque...');
+    return this.carService.getAllCars().pipe(
+      map(response => {
+        const cars = Array.isArray(response) ? response : [];
+        return cars
+          .slice(0, 6);
+      }),
+      catchError(() => of([]))
+    );
+  }
 
   getCars(): Observable<Car[]> {
     console.log('🚗 Buscando todos os carros...')

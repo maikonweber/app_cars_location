@@ -48,21 +48,31 @@ export class HomeComponent implements OnInit {
   }
 
 
-  onSubmitReserve() {
-    this.homeService
-  }
 
-  loadCars() {
-    this.isLoading = true;
-    this.errorMessage = '';
+    loadCars() {
+     this.isLoading = true;
+     this.errorMessage = '';
 
-   
-  }
-
-  
-
-  onCarClick(event: Event, car: any) {
-    console.log('Carro selecionado:', car);
-    // Implementar navegação para detalhes do carro
+    this.homeService.getFeaturedCars().subscribe({
+      next: (response: any) => {
+      console.log(response)
+        if (response) {
+         console.log('🏠 Dados do dashboard carregados:', response);
+          this.ngZone.run(() => {
+         this.cars = response  ;
+          });
+          console.log('🚗 Carros recentes carregados:', this.recentCars);
+        } else {
+        this.errorMessage = 'Falha ao carregar carros recentes';
+          console.error('❌', this.errorMessage);
+        }
+        this.isLoading = false;
+      },
+      error: (error: any) => {
+       this.errorMessage = 'Erro ao carregar carros recentes';
+        console.error('❌', this.errorMessage, error);
+        this.isLoading = false;
+      }
+    });
   }
 }

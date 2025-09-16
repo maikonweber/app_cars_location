@@ -59,7 +59,7 @@ Funcionalidades implementadas:
 * `[x]` Salvar JWT no login
 * `[x]` Interceptor de requisições
 * `[x]` Redirecionamento via botão de filtro
-* `[ ]` Lista de veículos (GET)
+* `[x]` Lista de veículos (GET)
 * `[ ]` Listagem de veículos
 * `[ ]` Filtros
 * `[ ]` Botão de reserva
