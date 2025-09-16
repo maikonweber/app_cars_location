@@ -66,6 +66,12 @@
   white-space: nowrap;
 }
 
+.reserve-button {
+  background-color: green;
+  width: 100%;
+  right: 100%;
+}
+
 .btn-filter:hover {
   background-color: #d62828;
 }

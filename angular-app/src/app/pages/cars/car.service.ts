@@ -72,55 +72,6 @@ export class CarService {
     );
   }
 
-  // Criar novo carro
-  createCar(car: Omit<Car, 'id'>): Observable<CarResponse> {
-    console.log('🚗 Criando novo carro:', car);
-    return this.http.post<CarResponse>(this.apiUrl, car, {
-      headers: this.getAuthHeaders()
-    }).pipe(
-      tap((response) => {
-        console.log('✅ Carro criado com sucesso:', response);
-      }),
-      catchError((error) => {
-        console.error('💥 Erro ao criar carro:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  // Atualizar carro
-  updateCar(id: number, car: Partial<Car>): Observable<CarResponse> {
-    console.log(`🚗 Atualizando carro ID: ${id}`, car);
-    return this.http.put<CarResponse>(`${this.apiUrl}/${id}`, car, {
-      headers: this.getAuthHeaders()
-    }).pipe(
-      tap((response) => {
-        console.log('✅ Carro atualizado com sucesso:', response);
-      }),
-      catchError((error) => {
-        console.error('💥 Erro ao atualizar carro:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  // Deletar carro
-  deleteCar(id: number): Observable<CarResponse> {
-    console.log(`🚗 Deletando carro ID: ${id}`);
-    return this.http.delete<CarResponse>(`${this.apiUrl}/${id}`, {
-      headers: this.getAuthHeaders()
-    }).pipe(
-      tap((response) => {
-        console.log('✅ Carro deletado com sucesso:', response);
-      }),
-      catchError((error) => {
-        console.error('💥 Erro ao deletar carro:', error);
-        return throwError(() => error);
-      })
-    );
-  }
-
-  // Buscar carros por filtros
   searchCars(filters: {
     marca?: string;
     modelo?: string;

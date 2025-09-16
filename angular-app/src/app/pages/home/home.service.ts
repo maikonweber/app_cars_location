@@ -3,6 +3,7 @@ import { CarService, Car } from '../cars/car.service';
 import { UserService, User } from '../users/user.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { response } from 'express';
 
 export interface DashboardData {
   totalCars: number;
@@ -26,6 +27,8 @@ export class HomeService {
     private carService: CarService,
     private userService: UserService
   ) { }
+
+
 
   // Buscar dados do dashboard
   getDashboardData(): Observable<DashboardData> {
@@ -107,5 +110,14 @@ export class HomeService {
       )
     }
   ;
+
+  reserverCars(): Observable<Car> {
+    return this.carService.getCarReserveById().pipe(
+      map(response => {
+        
+      }),
+      catchError(() => of([]))
+    )
+  }
 
 }
