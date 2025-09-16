@@ -17,15 +17,20 @@
     <div *ngIf="isLoading">Carregando...</div>
     <div *ngIf="errorMessage">{{ errorMessage }}</div>
     
-    <div class="cards">
-    <div class="card" *ngFor="let car of cars">
-        <img [src]="car.imageUrl" alt="Imagem do carro" class="car-image" />
-        <div class="card-content">
-          <h4>{{ car._id }} - {{ car.modelo }}</h4>
-          <p>Ano: {{ car.ano }}</p>
-        </div>
-      </div>
-    </div>
+   <div *ngIf="cars.length > 0; else noCars">
+  <div *ngFor="let car of cars" class="car-card">
+    <h3>{{ car.nome }}</h3>
+    <p>{{ car.ano }} - {{ car.tipo_modelo }}</p>
+    <p>Lugares: {{ car.numero_de_lugares }}</p>
+    <button > Reservar </button>
+    <img [src]="car.url" alt="{{ car.nome }}" width="200">
+  </div>
+</div>
+
+<ng-template #noCars>
+  <p>Nenhum carro encontrado.</p>
+</ng-template>
+
   </section>
 
   <div class="qr-section">

@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule, NgFor } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HomeService } from './home.service';
 import { Router } from '@angular/router';
 
@@ -26,7 +26,7 @@ export interface Car {
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
-  providers: [],
+  providers: [HomeService],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -39,12 +39,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
-    private router: Router,
     private ngZone: NgZone
   ) {}
 
   ngOnInit() {
     this.loadCars();
+    console.log(this.cars)
   }
 
   loadCars() {
@@ -53,7 +53,7 @@ export class HomeComponent implements OnInit {
 
     this.homeService.getFeaturedCars().subscribe({
       next: (response: any) => {
-
+        console.log(response)
         if (response) {
           console.log('🏠 Dados do dashboard carregados:', response);
           this.ngZone.run(() => {

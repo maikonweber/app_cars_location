@@ -72,6 +72,8 @@
 
 /* Seção de reservas */
 .reservas {
+  display: flex;
+  flex-direction: row;
   padding: 24px 16px;
   flex: 1;
 }

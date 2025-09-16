@@ -48,17 +48,13 @@ export class CarService {
       headers: this.getAuthHeaders()
     }).pipe(
       tap((response) => {
-        console.log('📥 Carros recebidos:', response);
+        console.log(response)
       }),
       catchError((error) => {
         console.error('💥 Erro ao buscar carros:', error);
         return throwError(() => error);
       })
     );
-  }
-
-  getAllCarsTodos(): Observable<Car[]> {
-    return this.http.get<Car[]>(`${this.apiUrl}`);
   }
 
   getCarById(id: number): Observable<CarResponse> {

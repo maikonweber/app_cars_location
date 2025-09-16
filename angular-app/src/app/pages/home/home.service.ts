@@ -84,15 +84,12 @@ export class HomeService {
     );
   }
 
-  // Buscar carros em destaque
   getFeaturedCars(): Observable<Car[]> {
     console.log('⭐ Buscando carros em destaque...');
     return this.carService.getAllCars().pipe(
       map(response => {
-        const cars = Array.isArray(response.data) ? response.data : [];
+        const cars = Array.isArray(response) ? response : [];
         return cars
-          .filter(car => car.disponivel)
-          .sort((a, b) => b.preco - a.preco)
           .slice(0, 6);
       }),
       catchError(() => of([]))

@@ -40,8 +40,8 @@ Este sistema permite gerenciar reservas de veículos, sem envolver cálculos de 
 
 ### Veículos
 
-* `[x]` Criar veículo com erro
-* `[ ]` Reserva falta parâmetro `id`
+* `[x]` Criar veículo
+* `[ ]` Reserva Veiculo
 * `[X]` Não reservar veículo já reservado
 * `[x]` Usuário não pode reservar mais de um veículo
 * `[x]` Filtro funciona
