@@ -72,6 +72,44 @@ export class CarService {
     );
   }
 
+  reserveCar(carId: string): Observable<any> {
+  console.log(`🚗 Reservando carro ID: ${carId}`);
+
+  return this.http.post<any>(`${this.apiUrl}/reserve`, 
+    { carId }, // body
+    { headers: this.getAuthHeaders() }
+  ).pipe(
+    tap((response) => {
+      console.log("✅ Reserva realizada com sucesso!", response);
+    }),
+    catchError((error) => {
+      console.error('💥 Erro ao reservar carro:', error);
+      return throwError(() => error);
+    })
+  );
+}
+  	
+// Error: Bad Request
+
+// Response body
+// Download
+// {
+//   "message": "Usuário já possui uma reserva ativa. Só é permitido alugar 1 carro por vez.",
+//   "error": "Bad Request",
+//   "statusCode": 400
+// }
+
+// Curl
+
+// curl -X 'POST' \
+//   'http://localhost:3000/cars/reserve' \
+//   -H 'accept: */*' \
+//   -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2OGM5YWFjN2NjMDY0N2IzZDMxNGQ3YzUiLCJuYW1lIjoiSm9obiBEb2UiLCJ1c2VybmFtZSI6Im1haWtvbndlYmVyMSIsInBhc3N3b3JkIjoiOTEzY2JjOWE2NGIzZTliZmY4MDAwMzI0ZjRlM2Y4NDc0YmNhY2Y2YWYwMmQxNWE4N2EwNjVmYTM1Zjg5MzY3YWFkNzJiMDJmMGRmNTlkYzE1NGU0YTUwYjlhNWI5ZmMyZjMyY2U1Y2ZjNDNiZjMxOGQwYTIxZWZhNDhhYTk2YWIiLCJzYWx0IjoiODFlNDcyMDkzYWFjIiwiY3JlYXRlZEF0IjoiMjAyNS0wOS0xNlQxODoyMTo1OS4zMzlaIiwidXBkYXRlZEF0IjoiMjAyNS0wOS0xNlQxODoyMTo1OS4zMzlaIiwiX192IjowLCJpYXQiOjE3NTgxMTk5NDksImV4cCI6MTc1ODU1MTk0OX0.vxeUDyfrcrh5Ir2e-PiC1IZq5ls32Mo4FrTwCw149gE' \
+//   -H 'Content-Type: application/json' \
+//   -d '{
+//   "carId": "68c58bc4e24d5fe41fba465f"
+// }'
+
   searchCars(filters: {
     marca?: string;
     modelo?: string;

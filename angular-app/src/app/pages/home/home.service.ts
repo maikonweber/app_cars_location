@@ -4,6 +4,7 @@ import { UserService, User } from '../users/user.service';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { response } from 'express';
+import { stringify } from 'node:querystring';
 
 export interface DashboardData {
   totalCars: number;
@@ -28,6 +29,9 @@ export class HomeService {
     private userService: UserService
   ) { }
 
+  reserveCar(id: string) {
+   return this.carService.reserveCar(id)
+  }
 
   getFeaturedCars(): Observable<Car[]> {
     console.log('⭐ Buscando carros em destaque...');

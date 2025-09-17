@@ -17,7 +17,6 @@
     <h3>Veículos</h3>
     
     <div *ngIf="isLoading">Carregando...</div>
-    <div *ngIf="errorMessage">{{ errorMessage }}</div>
     
     <div *ngIf="cars.length > 0; else noCars" class="car-list">
       <div *ngFor="let car of cars" class="car-card">
@@ -26,7 +25,8 @@
           <h3>{{ car.nome }}</h3>
           <p>{{ car.ano }} - {{ car.tipo_modelo }}</p>
           <p>Lugares: {{ car.numero_de_lugares }}</p>
-          <button class="reserve-button">Reservar</button>
+        <button (click)="reservar(car._id)" class="reserve-button">Reservar</button>
+
         </div>
       </div>
     </div>

@@ -46,8 +46,41 @@ export class HomeComponent implements OnInit {
     this.loadCars();
     console.log(this.cars)
   }
+    
+ reservar(carId: string) {
+  console.log("🛑 Iniciando processo de reserva...");
 
+  this.errorMessage = '';
+  this.isLoading = true;
 
+  this.homeService.reserveCar(carId).subscribe({
+    next: (response) => {
+      console.log("✅ Reserva efetuada com sucesso!", response);
+
+      this.ngZone.run(() => {
+        alert("Reserva efetuada com sucesso! 🚗");
+      });
+
+      this.isLoading = false;
+    },
+    error: (error) => {
+      console.error("💥 Erro ao tentar reservar:", error);
+
+      this.ngZone.run(() => {
+        if (error?.error?.message) {
+          this.errorMessage = error.error.message; 
+        } else {
+          this.errorMessage = "Erro inesperado ao reservar o carro.";
+        }
+        alert(`❌ ${this.errorMessage}`);
+      });
+
+      this.isLoading = false;
+      }
+    });
+  }
+
+      
 
     loadCars() {
      this.isLoading = true;
