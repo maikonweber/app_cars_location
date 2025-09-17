@@ -26,7 +26,7 @@ export interface Car {
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
-  providers: [HomeService],
+  providers: [HomeService, Router],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
@@ -39,27 +39,32 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private homeService: HomeService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.loadCars();
     console.log(this.cars)
   }
+
+ goToFilter() {
+    this.router.navigate(['/filter']);
+  }
     
- reservar(carId: string) {
-  console.log("🛑 Iniciando processo de reserva...");
+  reservar(carId: string) {
+    console.log("🛑 Iniciando processo de reserva...");
 
-  this.errorMessage = '';
-  this.isLoading = true;
+    this.errorMessage = '';
+    this.isLoading = true;
 
-  this.homeService.reserveCar(carId).subscribe({
-    next: (response) => {
-      console.log("✅ Reserva efetuada com sucesso!", response);
+    this.homeService.reserveCar(carId).subscribe({
+      next: (response) => {
+        console.log("✅ Reserva efetuada com sucesso!", response);
 
-      this.ngZone.run(() => {
-        alert("Reserva efetuada com sucesso! 🚗");
-      });
+        this.ngZone.run(() => {
+          alert("Reserva efetuada com sucesso! 🚗");
+        });
 
       this.isLoading = false;
     },
